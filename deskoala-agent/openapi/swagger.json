@@ -1,0 +1,1662 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Deskoala API",
+    "description": "Integration API for Deskoala",
+    "version": "1.0.0"
+  },
+  "host": "www10.deskoala.com/contact/index.php",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "basePath": "/ws30",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/company/list": {
+      "get": {
+        "summary": "get a list of companies",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "First part of company name to use as filter",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "company"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contact": {
+      "put": {
+        "summary": "add a contact and link it to fair with a inbox",
+        "description": "",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "array of Json objects of additional custom fields. Fields are tags in Administration -> Configuration -> Tables without '%' chars. Option values in italian language",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contacts"
+            }
+          }
+        ],
+        "tags": [
+          "contact"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "rimuove un contatto.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id del contatto da rimuovere",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "contact"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/contact/search": {
+      "get": {
+        "summary": "search contacts by 'phone' or 'mail'",
+        "description": "",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filterby",
+            "in": "query",
+            "description": "search for 'phone' or 'mail'",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "in": "query",
+            "description": "search for field that start with value",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "contact"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/fair/list": {
+      "get": {
+        "summary": "get fair list.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "results per page  (default=20)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "fair status  (all, new, open or closed)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/fair": {
+      "get": {
+        "summary": "recupera i dati della fiera in base al nome.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "nome univoco della fiera",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "add a new fair",
+        "description": "",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "nome univoco della fiera",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fair"
+            }
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "rimuove una fiera.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "nome univoco della fiera",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/fair/modify": {
+      "put": {
+        "summary": "update a fair data",
+        "description": "",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "unique fair name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "fair data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/fair"
+            }
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/fair/lead": {
+      "put": {
+        "summary": "add lead to fair.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "fair",
+            "in": "query",
+            "description": "unique fair name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "contact id to associate old contact. Leave empty to add new contact from contact data into body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "companyid",
+            "in": "query",
+            "description": "company id to associate old contact. Leave empty to add new company from company data into body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "lead data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/lead"
+            }
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "get lead data by id.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "lead id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "fair"
+        ]
+      }
+    },
+    "/fair/lead/modify": {
+      "put": {
+        "summary": "modify lead.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "lead id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "userid",
+            "in": "query",
+            "description": "contact id to associate old contact. Leave empty to add new contact from contact data into body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "companyid",
+            "in": "query",
+            "description": "company id to associate old contact. Leave empty to add new company from company data into body",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "lead data",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/lead"
+            }
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/fair/lead/checkBusinessCard": {
+      "post": {
+        "summary": "analyze uploaded lead business card with Sophia vision.",
+        "description": "Runs business card detection/extraction on a previously uploaded fair lead photo.",
+        "consumes": "application/json",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "image file path returned by /fair/lead/uploadPhoto",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "imageFilePath"
+              ],
+              "properties": {
+                "imageFilePath": {
+                  "type": "string",
+                  "example": "/var/imh/smtp/tmp/fairs/201/12/12_1718289332_card.jpg"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "fair"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns business card extraction payload.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/inbox/contactlistbyservice": {
+      "get": {
+        "summary": "recupera la lista delle fiere.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string",
+            "example": "<JWT>"
+          },
+          {
+            "name": "service",
+            "in": "query",
+            "description": "service name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "results per page  (default=20)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "contact status  (all, to_handle, handled)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "inbox"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/operator": {
+      "get": {
+        "summary": "get created or modified cases from a date",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "operator"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/teams": {
+      "get": {
+        "summary": "get all teams for specific company",
+        "description": "",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "JWT token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "teams"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/activity/generic": {
+      "put": {
+        "summary": "add generic activity to case",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "case_number",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "description": "reason",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "end date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "billing_model",
+            "in": "query",
+            "description": "contract model name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "contract num or 'Fuori Contratto'",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "real_hours",
+            "in": "query",
+            "description": "contract model",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "real_minutes",
+            "in": "query",
+            "description": "contract model",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_hours",
+            "in": "query",
+            "description": "contract model",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "billing_minutes",
+            "in": "query",
+            "description": "contract model",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ticket/activity"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/activity/asset": {
+      "put": {
+        "summary": "add asset activity to case",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "case_number",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "description": "reason",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "unit price of asset",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "quantity",
+            "in": "query",
+            "description": "asset quantity",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ticket/activity"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/activity/service": {
+      "put": {
+        "summary": "add service activity to case.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "case_number",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "query",
+            "description": "reason",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "end date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "description": "unit price of asset",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ticket/activity"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/activity/fromdate": {
+      "get": {
+        "summary": "get all actions from a date.",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "number of item per page (default=20)",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "ticket/activity"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/activity/description": {
+      "get": {
+        "summary": "get activity description by activity id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "internal_id",
+            "in": "query",
+            "description": "activity id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ticket/activity"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/export": {
+      "get": {
+        "summary": "Export tickets as CSV for Excel Power Query (advanced search columns, without description)",
+        "description": "Returns UTF-8 CSV (same columns as advanced search exportticketcsv, excluding description). Filters by createdon. CSV delimiter follows operator/company preferences (default from PREF_CSV_DELIMITER_DEFAULT). On errors returns HTTP 200 JSON {\"status\":-1,\"statusTxt\":\"...\"}.",
+        "produces": [
+          "text/csv"
+        ],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key with TICKET read permission",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd), inclusive end of day",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "ticketing"
+        ],
+        "responses": {
+          "200": {
+            "description": "CSV UTF-8 on success (ricerca avanzata, senza Descrizione, tutti gli stati nel periodo). On error: JSON body with status -1 and statusTxt."
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/lastByActivity": {
+      "get": {
+        "summary": "get created or modified cases from a date",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "number of item per page (default=20)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "option_description",
+            "in": "query",
+            "description": "0 to retreive option menu codes, 1 to retreive option menu desctiptions (default 1)",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "ticketing"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/deskoalaCasesKpi": {
+      "get": {
+        "summary": "get cases by JCN array and related statistics",
+        "description": "Retrieves case data and KPI statistics for a specific array of JCN values instead of filtering by date range",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "cases_no",
+            "in": "query",
+            "description": "JCN values to filter cases. Supports multiple formats: comma-separated string (1001,1002,1003), bracket format ([1001,1002,1003]), or array (cases_no[]=1001&cases_no[]=1002)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "number of item per page (default=20)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "option_description",
+            "in": "query",
+            "description": "0 to retreive option menu codes, 1 to retreive option menu desctiptions (default 1)",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "ticketing"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the cases found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/ticket/deskoalaKpi": {
+      "get": {
+        "summary": "get created cases between two dates and related statistics",
+        "description": "",
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "query",
+            "description": "Deskoala company ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "key",
+            "in": "query",
+            "description": "Deskoala WS Key",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "login",
+            "in": "query",
+            "description": "Deskoala operator login who perform the operation",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "date in iso format (yyyy-mm-dd hh:mm)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "operator_email",
+            "in": "query",
+            "description": "responsible email",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "team_name",
+            "in": "query",
+            "description": "team name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "origin",
+            "in": "query",
+            "description": "input channel type",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number (default=0)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "num",
+            "in": "query",
+            "description": "number of item per page (default=20)",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "option_description",
+            "in": "query",
+            "description": "0 to retreive option menu codes, 1 to retreive option menu desctiptions (default 1)",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "tags": [
+          "ticketing"
+        ],
+        "responses": {
+          "200": {
+            "description": "if no error returns a Json array of the company found.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GenericReply"
+              }
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "GenericReply": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "integer",
+          "description": "0 = operation completed, 0 != error"
+        },
+        "statusTxt": {
+          "type": "string",
+          "description": "the error description"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "string"
+        }
+      }
+    },
+    "fair": {
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "moa casa 2024"
+        },
+        "address": {
+          "type": "string",
+          "example": "nuova fiera di roma - ingresso nord"
+        },
+        "datefrom": {
+          "type": "string",
+          "example": "2024-05-28"
+        },
+        "dateto": {
+          "type": "string",
+          "example": "2024-06-01"
+        },
+        "team_id": {
+          "type": "string",
+          "example": ""
+        }
+      }
+    },
+    "lead": {
+      "required": [
+        "subject",
+        "description"
+      ],
+      "properties": {
+        "subject": {
+          "type": "string",
+          "example": "moa casa 2026 - Paolo rossi"
+        },
+        "description": {
+          "type": "string",
+          "example": "contattare Paolo al numero 123456"
+        },
+        "name": {
+          "type": "string",
+          "example": "Paolo"
+        },
+        "lastname": {
+          "type": "string",
+          "example": "Rossi"
+        },
+        "email": {
+          "type": "string",
+          "example": "paolo.rossi@icona.it"
+        },
+        "phone": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "contacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/contact"
+      }
+    },
+    "contact": {
+      "properties": {
+        "EMAIL": {
+          "type": "string",
+          "example": "test@test.it"
+        },
+        "FIRST_NAME": {
+          "type": "string",
+          "example": "Amerigo"
+        },
+        "LAST_NAME": {
+          "type": "string",
+          "example": "Vespucci"
+        }
+      }
+    }
+  }
+}
